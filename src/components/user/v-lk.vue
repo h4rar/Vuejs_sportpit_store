@@ -1,42 +1,70 @@
 <template>
   <div class="v-lk">
-    <div>
+    <div class="div1">
+      <p class="subheader2">Изменить данные</p>
       <form class="info" @submit.prevent="update_user">
-        <label>Login</label>
-        <input required :value="LK.username" @input="loginInput($event.target.value)">
-        <label>Имя</label>
-        <input required :value="LK.firstName" @input="firstNameInput($event.target.value)">
-        <label>Фамилия</label>
-        <input required :value="LK.lastName" @input="lastNameInput($event.target.value)">
-        <label>E-mail</label>
-        <input required :value="LK.email" @input="emailInput($event.target.value)" type="email">
-        <label>Телефон</label>
-        <input required :value="LK.phone" @input="phoneInput($event.target.value)">
-        <button type="submit">Изменить</button>
+        <div class="center_div">
+          <p class="subheader3 left">Login</p>
+        </div>
+        <input class="text" required :value="LK.username" @input="loginInput($event.target.value)">
+        <div class="center_div">
+          <p class="subheader3 left">Имя</p>
+        </div>
+        <input class="text" required :value="LK.firstName" @input="firstNameInput($event.target.value)">
+        <div class="center_div">
+          <p class="subheader3 left">Фамилия</p>
+        </div>
+        <input class="text" required :value="LK.lastName" @input="lastNameInput($event.target.value)">
+        <div class="center_div">
+          <p class="subheader3 left">E-mail</p>
+        </div>
+        <input class="text" required :value="LK.email" @input="emailInput($event.target.value)" type="email">
+        <div class="center_div">
+          <p class="subheader3 left">Телефон</p>
+        </div>
+        <input class="text" required :value="LK.phone" @input="phoneInput($event.target.value)">
+        <div>
+          <button class="btn_in subheader3" type="submit">Изменить</button>
+        </div>
       </form>
-      <div class="v-address__list">
-        <vLkAddressItem
-            v-for="(address,index)  in LK.address"
-            :key="address.id"
-            v-bind:address_data="address"
-            @deleteAddress="deleteAddress(index)"
-        />
-      </div>
-      <form class="addAddress" @submit.prevent="add_address">
-        <label>Улица</label>
-        <input required v-model="street">
-        <label>Дом</label>
-        <input required v-model="house">
-        <label>Квартира</label>
-        <input required v-model="room">
-        <label>Индекс</label>
-        <input required v-model="index">
-        <button type="submit">Добавить</button>
+
+    </div>
+    <div class="div2">
+      <p class="subheader2">Добавить адрес</p>
+      <form class="info" @submit.prevent="add_address">
+        <div class="center_div">
+          <p class="subheader3 left">Улица</p>
+        </div>
+        <input class="text" required v-model="street">
+        <div class="center_div">
+          <p class="subheader3 left">Дом</p>
+        </div>
+        <input class="text" required v-model="house">
+        <div class="center_div">
+          <p class="subheader3 left">Квартира</p>
+        </div>
+        <input class="text" required v-model="room">
+        <div class="center_div">
+          <p class="subheader3 left">Индекс</p>
+        </div>
+        <input class="text" required v-model="index">
+        <div>
+          <button class="btn_in subheader3" type="submit">Добавить</button>
+        </div>
       </form>
     </div>
-    <router-link :to="{name: 'orders'}">
-      <div @click="go_my_orders">Мои заказы</div>
-    </router-link>
+
+    <div class="address">
+      <p class="subheader2">Мои адреса</p>
+        <div class="v-address__list">
+          <vLkAddressItem
+              v-for="(address,index)  in LK.address"
+              :key="address.id"
+              v-bind:address_data="address"
+              @deleteAddress="deleteAddress(index)"
+          />
+        </div>
+    </div>
   </div>
 </template>
 
@@ -114,12 +142,20 @@ export default {
       this.room = ""
       this.index = ""
     },
-    go_my_orders(){
+    go_my_orders() {
       this.UPDATE_PATH("Мои заказы")
     }
   },
 
   mounted() {
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
+    this.UPDATE_PATH("Личный кабинет")
     this.UPDATE_PATH("Личный кабинет")
     this.GET_LK_FROM_API()
   },
@@ -127,9 +163,58 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.v-address__list {
-  display: inline-list-item;
-  width: 800px;
-  position: relative;
+//.v-address__list {
+//  display: inline-list-item;
+//  width: 800px;
+//  position: relative;
+//}
+
+.div1, .div2 {
+  display: inline-block;
+  margin-left: 100px;
+  width: 250px;
+  height: 420px;
+  //background: #ff846b;
+}
+
+.left {
+  text-align: left;
+}
+
+input {
+  width: 250px;
+  height: 30px;
+  border: none;
+  border-radius: $radius;
+  background: $gray
+}
+
+p {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+.btn_in {
+  margin-top: 15px;
+  padding: $padding $padding*2;
+  background: $red-bg;
+  color: #ffffff;
+  border: 0;
+  border-radius: $radius;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    background: $red-bg-hover;
+  }
+}
+.address{
+  width: 700px;
+  height: 200px;
+  padding-top: 10px;
+  display: inline-block;
+}
+.div1{
+  margin-left: 150px;
 }
 </style>

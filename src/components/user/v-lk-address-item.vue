@@ -1,10 +1,10 @@
 <template>
   <div v-if="isValidStatus" class="v-lk-address">
-    <p>{{ address_data.street }}</p>
-    <p>{{ address_data.house }}</p>
-    <p>{{ address_data.room }}</p>
-    <p>{{ address_data.index }}</p>
-    <button @click="deleteAddress(address_data.id)">Удалить</button>
+    <p>ул.{{ address_data.street }}</p>
+    <p>д. {{ address_data.house }}</p>
+    <p>кв. {{ address_data.room }}</p>
+    <p>индекс: {{ address_data.index }}</p>
+    <button class="btn" @click="deleteAddress(address_data.id)">Удалить</button>
   </div>
 </template>
 
@@ -49,11 +49,14 @@ export default {
 
 <style scoped lang="scss">
 .v-lk-address {
+  margin: $margin;
+  padding-left: $padding*2;
+  padding-right: $padding*2;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 0 8px 0 dimgrey;
+  background: $gray;
   border: 0;
   border-radius: $radius;
 }

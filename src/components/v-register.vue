@@ -1,36 +1,26 @@
 <template>
   <div class="v-register">
     <div>
-      <form class="register" @submit.prevent="register">
-        <label>Login</label>
-        <input required v-model="username">
-        <label>Фамилия</label>
-        <input required v-model="firstName">
-        <label>Имя</label>
-        <input required v-model="lastName">
-        <label>E-mail</label>
-        <input required v-model="email" type="email">
-        <label>Телефон</label>
-        <input required v-model="phone">
-        <label>Password</label>
-        <input required v-model="password" type="password"/>
-        <button type="submit">Регистрация</button>
-      </form>
+      <div class="center_div">
+        <form @submit.prevent="register">
+          <p class="subheader2 left">Login</p>
+          <input class="subheader2" required v-model="username">
+          <p class="subheader2 left">Имя</p>
+          <input class="subheader2" required v-model="firstName">
+          <p class="subheader2 left">Фамилия</p>
+          <input class="subheader2" v-model="lastName">
+          <p class="subheader2 left">E-mail</p>
+          <input class="subheader2" required v-model="email">
+          <p class="subheader2 left">Телефон</p>
+          <input class="subheader2" required v-model="phone">
+          <p class="subheader2 left">Пароль</p>
+          <input class="subheader2" required v-model="password" type="password">
+          <div>
+            <button class="btn_in subheader2" type="submit">Регистрация</button>
+          </div>
+        </form>
+      </div>
     </div>
-
-
-<!--    <div class="window">-->
-<!--      <p class="input_text text">login:<br>-->
-<!--          <input type="text" size="25">-->
-<!--      </p>-->
-<!--      <p class="text">password:<br>-->
-<!--          <input type="password" size="25">-->
-<!--      </p>-->
-<!--      <button class="btn_in">-->
-<!--        Войти-->
-<!--      </button>-->
-<!--    </div>-->
-
   </div>
 </template>
 
@@ -39,14 +29,14 @@ import {mapActions} from "vuex";
 
 export default {
   name: "v-login",
-  data(){
+  data() {
     return {
-      username : "",
-      firstName : "",
-      lastName : "",
-      email : "",
-      phone : "",
-      password : ""
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      password: ""
     }
   },
   methods: {
@@ -74,7 +64,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.btn_in{
+.btn_in {
+  margin-top: 15px;
   padding: $padding $padding*2;
   background: $red-bg;
   color: #ffffff;
@@ -82,14 +73,34 @@ export default {
   border-radius: $radius;
   outline: none;
   cursor: pointer;
+
   &:hover {
     background: $red-bg-hover;
   }
-
-
-  .input_text{
-    text-align: justify;
-  }
 }
 
+.center_div {
+  display: inline-block;
+
+  width: 200px;
+  height: 200px;
+  //background: #ff846b;
+}
+
+.left {
+  text-align: left;
+}
+
+input {
+  width: 200px;
+  height: 30px;
+  border: none;
+  border-radius: $radius;
+  background: $gray
+}
+
+p {
+  margin-top: 15px;
+  margin-bottom: 0;
+}
 </style>

@@ -4,8 +4,7 @@
       <vMyOrdersItem
           v-for="order in ORDERS"
           :key="order.id"
-          v-bind:order_data="order"
-      />
+          v-bind:order_data="order"/>
     </div>
   </div>
 </template>

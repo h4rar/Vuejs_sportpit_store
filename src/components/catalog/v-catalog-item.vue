@@ -1,7 +1,7 @@
 <template>
   <div class="v-catalog-item" >
-<!--    <img class="v-catalog-item__image" src="../assets/test_pic.png" alt="img">-->
-    <img class="v-catalog-item__image" :src=" require('../../assets/' + 'test_pic.png')" alt="img" @click="productClick">
+    <img v-if="product_data.picPath !== null" class="v-catalog-item__image" :src="product_data.picPath" alt="img" @click="productClick">
+    <img v-else class="v-catalog-item__image" :src=" require('../../assets/' + 'test_pic.png')" alt="img" @click="productClick">
     <p class="v-catalog-item__name subheader2">{{ product_data.name }}</p>
     <p class="v-catalog-item__category text">{{ product_data.category }}</p>
     <p class="v-catalog-item__price subheader1">{{ product_data.price }} р.</p>
@@ -14,6 +14,8 @@
 
 <script>
 
+import {mapActions} from "vuex";
+
 export default {
   name: "v-catalog-item",
   props: {
@@ -25,13 +27,17 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'UPDATE_PATH',
+    ]),
     addToCart() {
       this.$emit("addToCart",this.product_data)
     },
     productClick(){
+      this.UPDATE_PATH(this.product_data.name)
       this.$emit("productClick",this.product_data.id)
     }
-  }
+  },
 }
 </script>
 

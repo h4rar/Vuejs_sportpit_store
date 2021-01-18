@@ -18,10 +18,14 @@ let store = new Vuex.Store({
             name: "Главная"
         },
         orders: [],
+        orders_admin: [],
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, product) => {
             state.products = product;
+        },
+        ADD_PRODUCTS_TO_STATE: (state, product) => {
+            state.products.push(product);
         },
         SET_PATH_TO_STATE: (state, name) => {
             state.path.name = name;
@@ -31,6 +35,9 @@ let store = new Vuex.Store({
         },
         SET_ORDERS_TO_STATE: (state, orders) => {
             state.orders = orders;
+        },
+        SET_ORDERS_ADMIN: (state, orders) => {
+            state.orders_admin = orders;
         },
         SET_CATEGORIES_TO_STATE: (state, category) => {
             state.categories = category;
@@ -129,6 +136,18 @@ let store = new Vuex.Store({
                     return error;
                 })
         },
+        DeleteProduct({commit}, id) {
+            let path = "https://api-sportpit.herokuapp.com/api/admin/products/" + id
+            return axios(path, {method: "DELETE"})
+                .then((products) => {
+                    commit("nothing");
+                    return products;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    return error;
+                })
+        },
         GET_LK_FROM_API({commit}) {
             return axios("https://api-sportpit.herokuapp.com/api/users/lk", {
                 method: "GET",
@@ -148,6 +167,19 @@ let store = new Vuex.Store({
             })
                 .then((orders) => {
                     commit("SET_ORDERS_TO_STATE", orders.data.content);
+                    return orders.data.content;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    return error;
+                })
+        },
+        GET_ORDERS_ADMIN({commit}) {
+            return axios("https://api-sportpit.herokuapp.com/api/admin/orders", {
+                method: "GET",
+            })
+                .then((orders) => {
+                    commit("SET_ORDERS_ADMIN", orders.data.content);
                     return orders.data.content;
                 })
                 .catch((error) => {
@@ -259,6 +291,35 @@ let store = new Vuex.Store({
                     })
             })
         },
+        add_new_category({commit}, info) {
+            axios({
+                url: 'https://api-sportpit.herokuapp.com/api/admin/categories',
+                data: info,
+                method: 'POST',
+            })
+                .then(resp => {
+                    commit('nothing', info);
+                    return resp;
+                })
+                .catch(error => {
+                    console.log(error);
+                    return error;
+                })
+        },
+        admin_update_order_status({commit}, info) {
+            return new Promise((resolve) => {
+                axios({url: 'https://api-sportpit.herokuapp.com/api/admin/orders/update-status', data: info, method: 'POST'})
+                    .then(resp => {
+                        commit();
+                        resolve()
+                        return resp;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        return error;
+                    })
+            })
+        },
         CREATE_NEW_ORDER({commit}, info) {
             return new Promise(() => {
                 axios({url: 'https://api-sportpit.herokuapp.com/api/cart/to-order', data: info, method: 'POST'})
@@ -309,6 +370,9 @@ let store = new Vuex.Store({
         },
         ORDERS(state) {
             return state.orders;
+        },
+        ORDERS_ADMIN(state) {
+            return state.orders_admin;
         },
         LK(state) {
             return state.lk;

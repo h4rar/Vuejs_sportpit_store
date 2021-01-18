@@ -1,21 +1,15 @@
 <template>
   <div class="v-cart-item">
-    <!--    <img :src=" require('../../assets/images/' + cart_item_data.image)" alt="cart">-->
-    <img class="v-cart-item__image" :src=" require('../../assets/' + 'test_pic.png')" alt="cart">
-    <!--    <img class="v-catalog-item__image" src="../assets/test_pic.png" alt="img">-->
-    <div class="v-cart-item__info">
-      <p>{{ cart_item_data.name }}</p>
-      <p>{{ cart_item_data.price }}</p>
-    </div>
-    <div class="v-cart-item__quantity">
-      <p>Количество</p>
-      <span>
-        <span class="quantity__btn" @click="decrementItem">-</span>
-        {{ cart_item_data.quantity }}
-        <span class="quantity__btn" @click="incrementItem">+</span>
-      </span>
-    </div>
-    <button @click="deleteFromCart">Удалить</button>
+    <img v-if="cart_item_data.picPath !== null" class="v-cart-item__image" :src="cart_item_data.picPath" alt="img">
+    <img v-else class="v-cart-item__image" src="../../assets/test_pic.png" alt="img">
+    <p>{{ cart_item_data.name }}</p>
+    <span>
+          <button class="quantity__btn" @click="decrementItem">-</button>
+          {{ cart_item_data.quantity }}
+          <button class="quantity__btn" @click="incrementItem">+</button>
+    </span>
+    <p>{{ cart_item_data.price }} р.</p>
+    <button class="del__btn" @click="deleteFromCart">X</button>
   </div>
 
 </template>
@@ -54,11 +48,14 @@ export default {
 
 <style scoped lang="scss">
 .v-cart-item {
+  margin: $margin;
+  padding-left: $padding*2;
+  padding-right: $padding*2;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 0 8px 0 dimgrey;
+  background: $gray;
   border: 0;
   border-radius: $radius;
 
@@ -67,7 +64,32 @@ export default {
   }
 
   .quantity__btn {
+    padding: $padding $padding*2;
+    background: $gray2;
+    color: $blue;
+    border: 0;
+    border-radius: $radius;
+    outline: none;
     cursor: pointer;
+
+    &:hover {
+      background: $white;
+    }
+  }
+
+  .del__btn {
+    padding: $padding/2 $padding;
+    background: $gray2;
+    color: $blue;
+    border: 0;
+    border-radius: $radius;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      background: $red-bg;
+      color: $white;
+    }
   }
 }
 

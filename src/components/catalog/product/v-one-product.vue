@@ -1,8 +1,8 @@
 <template>
   <div class="v-one-product">
-    <!--    <p>{{PRODUCT.commentDto.length}}</p>-->
     <div class="ticket">
-      <img class="__image" :src=" require('../../../assets/' + 'test_pic.png')" alt="img">
+      <img v-if="PRODUCT.picPath !== null" class="__image" :src="PRODUCT.picPath" alt="img">
+      <img v-else class="__image" :src=" require('../../../assets/' + 'test_pic.png')" alt="img">
       <div class="info">
         <p class="h4h4 name">{{ PRODUCT.name }}</p>
         <p class="text category">{{ PRODUCT.category }}</p>
@@ -11,6 +11,13 @@
                 class="subheader2_italic btn">
           Добавить в корзину
         </button>
+        <div v-if="LK.role==='ROLE_ADMIN'">
+          <router-link :to="{name: 'update-product'}">
+            <button class="subheader2_italic b">Изменить</button>
+          </router-link>
+          <button @click="deleteProduct" class="subheader2_italic b">Удалить</button>
+        </div>
+
       </div>
     </div>
 
@@ -65,6 +72,7 @@ export default {
   computed: {
     ...mapGetters([
       "PRODUCT",
+      "LK",
     ]),
     componentKey() {
       let e = this.ck + 1
@@ -81,42 +89,37 @@ export default {
     ...mapActions([
       'GET_ONE_PRODUCT_FROM_API',
       'ADD_TO_CART',
-      'add_comments'
+      'add_comments',
+      'DeleteProduct',
+      'UPDATE_PATH'
     ]),
+    go: function (name) {
+      this.UPDATE_PATH(name)
+    },
     forceRerender() {
       this.componentKey += 1;
     },
     addToCard() {
       this.ADD_TO_CART(this.PRODUCT);
     },
+    deleteProduct() {
+      this.DeleteProduct(this.PRODUCT.id)
+          .then(() => this.$router.push('/'))
+          .then(() => this.$router.go())
+          .catch(err => console.log(err))
+    },
     new_comment: function () {
       let data = {
         text: this.comment,
         id: this.PRODUCT.id
       }
-
-
       this.$store.dispatch("add_comments", data)
       this.GET_ONE_PRODUCT_FROM_API(this.PRODUCT.id)
+      this.comment = ""
       this.GET_ONE_PRODUCT_FROM_API(this.PRODUCT.id)
           .then(function () {
             this.forceRerender()
           });
-
-      //     .then(() => {
-      //   // this.$store.dispatch("getCountryList");
-      //   console.log("add_comments")
-      // });
-
-      // this.$store.dispatch('add_comments', data)
-      //     .then(function () {
-      //       console.log("add_comments")
-      //       // this.GET_ONE_PRODUCT_FROM_API(this.$route.query.product)
-      //       //     .then(function () {
-      //       //       console.log(this.forceRerender())
-      //       //       this.forceRerender()
-      //       //     });
-      //     });
     }
   },
 }
@@ -222,6 +225,10 @@ body {
 
 .tabs > label:not(:first-of-type) {
   border-left: none;
+}
+
+.b {
+  margin: $margin;
 }
 
 .tabs > input[type="radio"]:checked + label {

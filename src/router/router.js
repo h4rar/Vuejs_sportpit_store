@@ -9,6 +9,9 @@ import vOneProduct from '../components/catalog/product/v-one-product'
 import vMyOrders from '../components/order/v-my-orders'
 import vContacts from '../components/v-contacts'
 import vDelivery from '../components/v-delivery'
+import vAdmin from '../components/admin/v-main-admin'
+import vOrdersAdmin from '../components/admin/orders/v-orders-admin'
+import vUpdateProduct from '../components/catalog/product/v-update-product'
 
 Vue.use(Router);
 
@@ -60,7 +63,21 @@ let router = new Router({
             name: 'delivery',
             component: vDelivery,
         },
-
+        {
+            path: '/admin/',
+            name: 'admin',
+            component: vAdmin,
+        },
+        {
+            path: '/orders-admin/',
+            name: 'orders-admin',
+            component: vOrdersAdmin,
+        },
+        {
+            path: '/update-product/',
+            name: 'update-product',
+            component: vUpdateProduct,
+        },
     ]
 })
 

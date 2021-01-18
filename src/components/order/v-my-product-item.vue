@@ -2,7 +2,7 @@
   <div class="v-my-product-item">
     <table class="text">
         <tr class="gray">
-          <td class="leftcol">{{ product_data.productResponseDto.name }}</td>
+          <td class="leftcol tt">{{ product_data.productResponseDto.name }}</td>
           <td class="rightcol">{{ product_data.quantity }}</td>
           <td class="rightcol">{{ allPrice }}</td>
         </tr>
@@ -46,6 +46,9 @@ table.text td {
 
 table{
   padding-left: 100px;
+}
+.tt{
+  padding-left: 25px;
 }
 
 td.rightcol { /* Правая ячейка */

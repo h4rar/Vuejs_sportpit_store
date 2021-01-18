@@ -1,49 +1,66 @@
 <template>
   <div class="v-cart">
-    <h1>Корзина</h1>
-    <p v-if="!cart_data.length">Ваша корзина пуста</p>
-    <v-cart-item
-        v-for="(item,index) in cart_data"
-        :key="item.id"
-        :cart_item_data="item"
-        @deleteFromCart="deleteFromCart(index)"
-        @decrement="decrement(index)"
-        @increment="increment(index)"
-    />
-    <div v-if="cart_data.length" class="v-cart__total">
-      <p class="total__name">Итого:</p>
-      <p>{{ cartTotalConst }} р.</p>
+    <p v-if="!cart_data.length" class="subheader2">Ваша корзина пуста</p>
+
+    <div class="orders">
+      <div class="v-orders__list">
+        <v-cart-item
+            v-for="(item,index) in cart_data"
+            :key="item.id"
+            :cart_item_data="item"
+            @deleteFromCart="deleteFromCart(index)"
+            @decrement="decrement(index)"
+            @increment="increment(index)"
+        />
+      </div>
     </div>
 
-    <div>
-      <input type="radio" value="Бесплатная_доставка" v-model="dataVersionDelivery">
-      <label>Бесплатная доставка</label>
-      <br>
-      <input type="radio" value="Самовывоз" v-model="dataVersionDelivery">
-      <label>Самовывоз магазин ''Атлетера'' г.Томск ул.Котовского, 26</label>
-      <br>
+    <div class="summ subheader2" v-if="cart_data.length">
+      <p>Итого: {{ cartTotalConst }} р.</p>
     </div>
 
-    <div>
-      <select v-model="dataAddress">
-        <option  v-for="ad in LK.address"
-                :key="ad.id"
-            v-bind:value="ad.id">ул. {{ ad.street }}, д.{{ ad.house }}, кв.{{ ad.room }}</option>
-      </select>
+    <router-link class="link" v-if="!LK.address.length && cart_data.length" :to="{name: 'lk'}">
+      <li @click="go('Личный кабинет')">Для оформления заказа необходимо <u>добавить адрес доставки</u></li>
+    </router-link>
+
+
+    <div v-if="cart_data.length && LK.address.length" class="inffo">
+      <div  class="left">
+        <p class="subheader2">Способ доставки</p>
+        <input type="radio" value="Бесплатная_доставка" v-model="dataVersionDelivery">
+        <label class="subheader3">Бесплатная доставка</label>
+        <br>
+        <input type="radio" value="Самовывоз" v-model="dataVersionDelivery">
+        <label class="subheader3">Самовывоз магазин ''Атлетера'' г.Томск ул.Ленина, 30</label>
+        <br>
+
+        <p class="subheader2">Адрес доставки</p>
+        <div>
+          <select v-model="dataAddress">
+            <option v-for="ad in LK.address"
+                    :key="ad.id"
+                    v-bind:value="ad.id">ул. {{ ad.street }}, д.{{ ad.house }}, кв.{{ ad.room }}
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <p class="subheader2">Способ оплаты</p>
+          <input type="radio" value="Наличный" v-model="dataPaymentMethod">
+          <label>Наличный расчет</label>
+          <br>
+          <input type="radio" value="Банковской_картой" v-model="dataPaymentMethod">
+          <label>Оплата банковской картой</label>
+          <br>
+          <input type="radio" value="Онлайн" v-model="dataPaymentMethod">
+          <label>Онлайн оплата</label>
+        </div>
+
+        <button @click="create_order">Оформить заказ</button>
+      </div>
     </div>
 
-    <div>
-      <input type="radio" value="Наличный" v-model="dataPaymentMethod">
-      <label>Наличный расчет</label>
-      <br>
-      <input type="radio" value="Банковской_картой" v-model="dataPaymentMethod">
-      <label>Оплата банковской картой</label>
-      <br>
-      <input type="radio" value="Онлайн" v-model="dataPaymentMethod">
-      <label>Онлайн оплата</label>
-    </div>
 
-    <button @click="create_order">Оформить</button>
   </div>
 </template>
 
@@ -98,10 +115,14 @@ export default {
       "DECREMENT_CART_ITEM",
       "CREATE_NEW_ORDER",
       'GET_LK_FROM_API',
-      'GET_ORDERS_FROM_API'
+      'GET_ORDERS_FROM_API',
+      'UPDATE_PATH',
     ]),
     increment(index) {
       this.INCREMENT_CART_ITEM(index)
+    },
+    go: function (name) {
+      this.UPDATE_PATH(name)
     },
     create_order: function () {
       let obj = {};
@@ -134,18 +155,46 @@ export default {
 
 <style scoped lang="scss">
 .v-cart {
-  &__total {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: $padding*3;
-    display: flex;
-    justify-content: center;
-  }
-
   .total__name {
     margin-right: $margin * 2;
   }
 }
+
+.orders {
+  width: 850px;
+  //height: 200px;
+  padding-top: 10px;
+  display: inline-block;
+}
+
+.inffo {
+  width: 500px;
+  height: 800px;
+  padding-top: 10px;
+  //position: relative;
+  //left: 340px;
+  display: inline-block;
+  float: left;
+  margin-left: 110px;
+
+  //background: chocolate;
+}
+
+.summ {
+  text-align: right;
+  margin-right: 265px;
+}
+
+.left {
+  text-align: left;
+  //margin-right: 265px;
+}
+.link {
+  color: $red-bg-hover;
+}
+
+.subheader2{
+  margin-bottom: 0;
+}
+
 </style>

@@ -8,6 +8,9 @@
             <router-link class="auth" :to="{name: 'lk', params:{profile_profile: LK}}">
               <li @click="go('Личный кабинет')">Личный кабинет</li>
             </router-link>
+            <router-link v-if="LK.role==='ROLE_ADMIN'" class="auth" :to="{name: 'admin'}">
+              <li @click="go('Admin')" >Admin</li>
+            </router-link>
             <li @click="logout">Выйти</li>
           </div>
           <div v-else>
@@ -18,8 +21,6 @@
               <li @click="go('Регистрация')" >Регистрация</li>
             </router-link>
           </div>
-
-
         </ul>
       </div>
       <div class="v-main-wrapper__menu">
@@ -47,6 +48,7 @@
       </div>
       <div>
         <vPath :key="componentKey"></vPath>
+        <input type="hidden" v-model="update">
       </div>
 
       <keep-alive>
@@ -98,8 +100,14 @@ export default {
     ]),
     isLoggedIn: function () {
       return this.$store.getters.isLoggedIn
-    }
+    },
+    update() {
+      let newVar = this.t + 1;
+      console.log(newVar)
+      return newVar
+    },
   },
+
 
   components: {
     vCategory,

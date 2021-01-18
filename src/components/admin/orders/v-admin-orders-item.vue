@@ -5,7 +5,17 @@
         <tr class="head">
           <td class="leftcol">Заказ № {{order_data.id}} от {{ order_data.created[2] }}.{{ order_data.created[1] }}.{{ order_data.created[0] }}</td>
           <td class="rightcol"></td>
-          <td class="rightcol">Статус: {{status}}</td>
+          <td class="rightcol">Статус: {{status}}
+
+            <form @submit.prevent="update_status">
+            <select v-model="new_status">
+              <option>В_процессе</option>
+              <option>Выполнен</option>
+              <option>Отменен</option>
+            </select>
+              <button class="" type="submit">Изменить</button>
+            </form>
+          </td>
         </tr>
         <tr class="gray">
           <td class="leftcol">Способ доставки: {{order_data.delivery}}</td>
@@ -42,9 +52,20 @@ export default {
   components: {
     vMyProductItem
   },
+  data(){
+    return {
+      new_status:''
+    }
+  },
   props: {
     order_data: {
       type: Object,
+      default() {
+        return {}
+      }
+    },
+    i:{
+      type: Number,
       default() {
         return {}
       }
@@ -56,7 +77,20 @@ export default {
       if(this.order_data.orderStatus === "В_процессе"){
         text = "В процессе"
       }
+      else {
+        text = this.order_data.orderStatus
+      }
       return text
+    }
+  },
+  methods:{
+    update_status: function (){
+        let data = {
+          id: this.order_data.id,
+          orderStatus: this.new_status,
+        }
+        this.$store.dispatch('admin_update_order_status', data)
+        this.$router.go()
     }
   }
 }
