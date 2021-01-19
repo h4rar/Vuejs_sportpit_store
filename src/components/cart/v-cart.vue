@@ -36,8 +36,8 @@
 
         <p class="subheader2">Адрес доставки</p>
         <div>
-          <select v-model="dataAddress">
-            <option v-for="ad in LK.address"
+          <select class="text" v-model="dataAddress">
+            <option class="text" v-for="ad in LK.address"
                     :key="ad.id"
                     v-bind:value="ad.id">ул. {{ ad.street }}, д.{{ ad.house }}, кв.{{ ad.room }}
             </option>
@@ -56,11 +56,9 @@
           <label>Онлайн оплата</label>
         </div>
 
-        <button @click="create_order">Оформить заказ</button>
       </div>
     </div>
-
-
+    <button class="btn subheader2 right" @click="create_order">Оформить заказ</button>
   </div>
 </template>
 
@@ -159,7 +157,33 @@ export default {
     margin-right: $margin * 2;
   }
 }
+input[type='radio']:after {
+  width: 13px;
+  height: 13px;
+  border-radius: 13px;
+  top: -1px;
+  left: -1px;
+  position: relative;
+  background-color: #d1d3d1;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid $gray;
+}
 
+input[type='radio']:checked:after {
+  width: 13px;
+  height: 13px;
+  border-radius: 13px;
+  top: -1px;
+  left: -1px;
+  position: relative;
+  background-color: $red-bg;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid $gray;
+}
 .orders {
   width: 850px;
   //height: 200px;
@@ -170,14 +194,17 @@ export default {
 .inffo {
   width: 500px;
   height: 800px;
-  padding-top: 10px;
-  //position: relative;
-  //left: 340px;
   display: inline-block;
   float: left;
   margin-left: 110px;
+}
 
-  //background: chocolate;
+.select {
+  width: 500px;
+  height: 800px;
+  display: inline-block;
+  float: left;
+  margin-left: 110px;
 }
 
 .summ {
@@ -195,6 +222,10 @@ export default {
 
 .subheader2{
   margin-bottom: 0;
+}
+.right{
+  margin-top: 270px;
+  text-align: right;
 }
 
 </style>

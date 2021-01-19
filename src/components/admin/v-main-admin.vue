@@ -1,9 +1,5 @@
 <template>
   <div class="v-main-admin">
-    <router-link :to="{name: 'orders-admin'}">
-      <li>Посмотрть список заказов</li>
-    </router-link>
-    <hr>
     <p>Добавить новый товар</p>
     <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
       <label>Название</label>
@@ -34,7 +30,10 @@
       <input required v-model="name">
       <button type="submit">Добавить категорию</button>
     </form>
-
+    <hr>
+    <router-link :to="{name: 'orders-admin'}">
+      <li>Посмотрть список заказов</li>
+    </router-link>
   </div>
 </template>
 
