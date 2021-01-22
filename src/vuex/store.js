@@ -120,12 +120,20 @@ let store = new Vuex.Store({
             let path = "https://api-sportpit.herokuapp.com/api/products"
             if (searchInfo.category !== undefined) {
                 let s = "?category=" + searchInfo.category;
+                console.log(s)
                 path += s;
             }
             if (searchInfo.searchText !== undefined) {
                 let s = "&search=" + searchInfo.searchText;
+                console.log(s)
                 path += s;
             }
+            if (searchInfo.sale !== undefined) {
+                let s = "&sale=" + searchInfo.sale;
+                console.log(s)
+                path += s;
+            }
+            console.log(path)
             return axios(path, {method: "GET"})
                 .then((products) => {
                     commit("SET_PRODUCTS_TO_STATE", products.data.content);

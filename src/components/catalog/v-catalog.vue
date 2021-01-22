@@ -52,8 +52,8 @@ export default {
   &__list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    align-items: normal;
   }
 
   &__link_to_cart {

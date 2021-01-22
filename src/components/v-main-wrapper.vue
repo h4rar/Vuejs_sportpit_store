@@ -32,9 +32,9 @@
         <router-link class="v-main-wrapper__router-link" :to="{name: 'delivery'}">
           <div @click="go('Доставка/Оплата')" class="v-main-wrapper__link subheader2">ДОСТАВКА/ОПЛАТА</div>
         </router-link>
-        <router-link class="v-main-wrapper__router-link" :to="{name: 'cart'}">
-          <div @click="go('Акции')" class="v-main-wrapper__link subheader2">АКЦИИ</div>
-        </router-link>
+        <div class="v-main-wrapper__router-link">
+          <div @click="goAction()" class="v-main-wrapper__link subheader2">АКЦИИ</div>
+        </div>
         <router-link class="v-main-wrapper__router-link" :to="{name: 'contacts'}">
           <div @click="go('Контакты')" class="v-main-wrapper__link subheader2">КОНТАКТЫ</div>
         </router-link>
@@ -67,9 +67,9 @@
           <router-link class="v-main-wrapper__router-link" :to="{name: 'delivery'}">
             <div @click="go('Доставка/Оплата')" class="v-main-wrapper__link_bottom subheader2">ДОСТАВКА/ОПЛАТА</div>
           </router-link>
-          <router-link class="v-main-wrapper__router-link" :to="{name: 'cart'}">
-            <div @click="go('Акции')" class="v-main-wrapper__link_bottom subheader2">АКЦИИ</div>
-          </router-link>
+          <div class="v-main-wrapper__router-link">
+            <div @click="goAction()" class="v-main-wrapper__link subheader2 grfgf">АКЦИИ</div>
+          </div>
           <router-link class="v-main-wrapper__router-link" :to="{name: 'contacts'}">
             <div @click="go('Контакты')" class="v-main-wrapper__link_bottom subheader2">КОНТАКТЫ</div>
           </router-link>
@@ -129,6 +129,15 @@ export default {
     go: function (name) {
       this.UPDATE_PATH(name)
     },
+    goAction: function () {
+      this.UPDATE_PATH("Акции")
+
+      let category = ''
+      let searchText = ''
+      let sale = 'SALE'
+      this.$router.push('/')
+      this.$store.dispatch('SEARCH', {searchText, category, sale})
+    },
     forceRerender() {
       this.componentKey += 1;
     }
@@ -171,6 +180,7 @@ export default {
   }
 
   &__router-link {
+    cursor: pointer;
     text-decoration: none;
   }
 
@@ -245,6 +255,10 @@ export default {
 
   .content {
     min-height: calc(100vh - 60px);
+  }
+
+  .grfgf {
+    color: $gray;
   }
 }
 </style>

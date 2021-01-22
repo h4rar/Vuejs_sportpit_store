@@ -4,8 +4,23 @@
     <form id="uploadForm" name="uploadForm" enctype="multipart/form-data">
       <label>Название</label>
       <input type="text" id="name" name="name"><br>
-      <label>Цена</label>
+      <label>Конечная цена</label>
       <input type="text" id="price" name="price"><br>
+
+      <div>
+        <label>Акция</label>
+        <select id="saleStatus" name="saleStatus">
+          <option
+                  v-bind:value="SALE"> {{ SALE }}
+          </option>
+          <option
+              v-bind:value="NOT_SALE"> {{ NOT_SALE }}
+          </option>
+        </select>
+      </div>
+      <label>Старая цена</label>
+      <input type="text" id="oldPrice" name="oldPrice"><br>
+
       <label>Количество</label>
       <input type="text" id="quantity" name="quantity"><br>
       <label>Описание</label>
@@ -46,6 +61,8 @@ export default {
   data() {
     return {
       name: "",
+      SALE: "SALE",
+      NOT_SALE: "NOT_SALE",
     }
   },
 
@@ -61,7 +78,6 @@ export default {
         this.$store.dispatch('add_new_category', {name})
       },
 
-
       uploadFiles() {
         const data = new FormData(document.getElementById('uploadForm'))
         var imagefile = document.querySelector('#file')
@@ -73,6 +89,8 @@ export default {
         })
             .then(response => {
               console.log(response)
+              this.$router.push('/')
+              this.$router.go()
             })
             .catch(error => {
               console.log(error.response)

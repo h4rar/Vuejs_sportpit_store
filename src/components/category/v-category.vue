@@ -47,11 +47,15 @@ export default {
     search() {
       let searchText = this.searchText
       let category = this.PATH.name
+      let sale = ""
       if (category==="Главная"){
         category=""
       }
-
-      this.$store.dispatch('SEARCH', {searchText, category})
+      if (category==="Акции"){
+        sale="SALE"
+        category=""
+      }
+      this.$store.dispatch('SEARCH', {searchText, category, sale})
     },
     categoryNameClick(index) {
       let category = this.CATEGORIES[index].name

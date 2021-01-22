@@ -4,7 +4,22 @@
       <label>Название</label>
       <input type="text" :value="PRODUCT.name" id="name" name="name"><br>
       <label>Цена</label>
+
       <input type="text" :value="PRODUCT.price" id="price" name="price"><br>
+      <div>
+        <label>Акция</label>
+        <select id="saleStatus" name="saleStatus">
+          <option
+              v-bind:value="SALE"> {{ SALE }}
+          </option>
+          <option
+              v-bind:value="NOT_SALE"> {{ NOT_SALE }}
+          </option>
+        </select>
+      </div>
+      <label>Старая цена</label>
+      <input type="text" id="oldPrice" name="oldPrice"><br>
+
       <label>Количество</label>
       <input type="text" :value="PRODUCT.quantity" id="quantity" name="quantity"><br>
       <label>Описание</label>
@@ -31,6 +46,12 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "v-update-product",
+  data(){
+    return{
+      SALE: "SALE",
+      NOT_SALE: "NOT_SALE",
+    }
+  },
   computed: {
     ...mapGetters([
       "CATEGORIES",
@@ -56,6 +77,8 @@ export default {
       })
           .then(response => {
             console.log(response)
+            this.$router.push('/')
+            this.$router.go()
           })
           .catch(error => {
             console.log(error.response)

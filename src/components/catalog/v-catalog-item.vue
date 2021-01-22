@@ -4,7 +4,9 @@
     <img v-else class="v-catalog-item__image" :src=" require('../../assets/' + 'test_pic.png')" alt="img" @click="productClick">
     <p class="v-catalog-item__name subheader2">{{ product_data.name }}</p>
     <p class="v-catalog-item__category text">{{ product_data.category }}</p>
-    <p class="v-catalog-item__price subheader1">{{ product_data.price }} р.</p>
+    <p v-if="product_data.saleStatus ==='SALE'" class="v-catalog-item__price subheader2">
+      <strike>{{ product_data.price }}р.</strike> <a class="newPrice">{{ product_data.oldPrice }}р.</a></p>
+    <p v-else class="v-catalog-item__price subheader2">{{ product_data.price }}р.</p>
     <button
         class="v-catalog-item__add_to_cart_btn btn"
         @click="addToCart">Купить
@@ -42,6 +44,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.newPrice{
+  color: $red-bg;
+  padding: 0px 10px;
+}
 .v-catalog-item:hover {
   box-shadow: 0 0 8px 0 dimgrey;
   border: 0;
